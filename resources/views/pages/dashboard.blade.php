@@ -38,7 +38,11 @@
                                     <tbody>
                                     @foreach($calandars as $calandar)
                                         <tr>
-                                            <td style="width: 120px">{{$calandar['day_string']}} <br>{{$calandar['day']}}
+                                            <td style="width: 120px">
+                                                {{$calandar['day_string']}} <br>{{$calandar['day']}}
+                                                <button onclick='getReportDay("{{$calandar['day']}}")' data-bs-toggle="modal" data-bs-target="#bs-report-modal-sm" class="btn btn-sm btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        title="reporter les inscription sur le chaque {{$calandar['day_string']}}"><i class="icon icon-target"></i></button>
+
                                             </td>
                                             @foreach($calandar['calandar_periodes'] as $calandar_periode)
                                                 @if($calandar_periode['is_conge'])
@@ -52,7 +56,7 @@
                                                         <div class="col-md-6" >
                                                         @foreach($calandar_periode['list_calendars'] as $calandar_periode_)
                                                             <a href="#">
-                                                            <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ $calandar_periode_->user->name }} {{ $calandar_periode_->user->lastname }}"
+                                                            <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="left" title="Nom: {{ $calandar_periode_->user->name }} {{ $calandar_periode_->user->lastname }} Email:{{ $calandar_periode_->user->email }} Telephone: {{ $calandar_periode_->user->phone }}"
                                                                 class="badge badge-outline-danger">{{ $calandar_periode_->user->name }}</span>
                                                                 <br>
                                                             </a>
@@ -88,5 +92,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="bs-report-modal-sm" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Report de vos inscriptions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Veuillez confirmer la recopie de vos inscriptions sur chaque <span id="periode_id"></span> du mois</p>
+                    <form>
+                        {{csrf_field()}}
+                        <span id="reportday_id" hidden></span>
+
+                        <div class="mb-3 d-grid text-center">
+                            <button class="btn btn-outline-success" type="button" id="confirm_btn_calandar"> Je confime </button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 @endsection
 

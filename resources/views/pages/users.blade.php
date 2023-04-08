@@ -29,13 +29,19 @@
 
                                 </div>
                                 <div class="card-body">
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-2">
+                                            <button class="float-end btn btn-danger" id="send_mail">Envoyer les mails</button>
 
+                                        </div>
+                                     </div>
                                     <div class="responsive-table-plugin">
                                         <div class="table-rep-plugin">
                                             <div class="table-responsive" data-pattern="priority-columns">
-                                                <table id="tech-companies-1" class="table table-striped">
+                                                <table id="table_user" class="table table-striped">
                                                     <thead>
                                                     <tr>
+                                                        <th><input type="checkbox" id="selectAll"></th>
                                                         <th>#</th>
                                                         <th>Nom</th>
                                                         <th>Prenom</th>
@@ -48,7 +54,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($users as $user)
+                                               {{--     @foreach($users as $user)
                                                     <tr>
                                                         <td>{{$user->id}}</td>
                                                         <td>{{$user->name}}</td>
@@ -60,7 +66,7 @@
                                                         <td>{{$user->email}}</td>
                                                         <td>{{$user->role}}</td>
                                                     </tr>
-                                                    @endforeach
+                                                    @endforeach--}}
                                                     </tbody>
                                                 </table>
                                             </div>

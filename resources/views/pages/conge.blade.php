@@ -30,7 +30,8 @@ background-attachment: fixed;background-position: center">
                                 <h5 class="card-title mb-2 fw-bolder">Listes des congés</h5>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#bs-example-modal-sm"><i class="icofont icofont-plus"></i>Ajouter un congé
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#bs-example-modal-sm"><i class="icofont icofont-plus"></i>Ajouter un congé
                                         </button>
 
                                     </div>
@@ -41,7 +42,7 @@ background-attachment: fixed;background-position: center">
                                     <div class="responsive-table-plugin">
                                         <div class="table-rep-plugin">
                                             <div class="table-responsive" data-pattern="priority-columns">
-                                                <table id="tech-companies-1" class="table table-striped">
+                                                <table id="table_conge" class="table table-striped  data-table">
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -51,7 +52,7 @@ background-attachment: fixed;background-position: center">
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($conges as $conge)
+                                                  {{--  @foreach($conges as $conge)
                                                         <tr>
                                                             <td>{{$conge->id}}</td>
                                                             <td>{{$conge->date_conge}}</td>
@@ -65,7 +66,7 @@ background-attachment: fixed;background-position: center">
                                                             </div>
                                                         </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @endforeach--}}
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -134,4 +135,8 @@ background-attachment: fixed;background-position: center">
     </div><!-- /.modal -->
 
 @endsection
+@push('scripts')
+
+
+@endpush
 

@@ -31,7 +31,7 @@
                                     <div class="responsive-table-plugin">
                                         <div class="table-rep-plugin">
                                             <div class="table-responsive" data-pattern="priority-columns">
-                                                <table id="tech-companies-1" class="table table-striped">
+                                                <table id="table_connexion" class="table table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -42,7 +42,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($connexions as $connexion)
+                                                  {{--  @foreach($connexions as $connexion)
                                                     <tr>
                                                         <td>{{$connexion->id}}</td>
                                                         <td>{{$connexion->datecreation}}</td>
@@ -50,7 +50,7 @@
                                                         <td>{{$connexion->ip}}</td>
                                                         <td>{{$connexion->status}}</td>
                                                     </tr>
-                                                    @endforeach
+                                                    @endforeach--}}
                                                     </tbody>
                                                 </table>
                                             </div>

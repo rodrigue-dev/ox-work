@@ -65,5 +65,9 @@ Route::group(['middleware' => 'isAdmin'], function () {
         ->name('connexion');
     Route::get('/users', [HomeComtroller::class, 'users'])
         ->name('users');
+    Route::post('/users/sendmail', [HomeComtroller::class, 'sendmail'])
+        ->name('sendmail');
+    Route::get('/report/calendar', [HomeComtroller::class, 'reportCalendar'])
+        ->name('reportcalandar');
 });
 
