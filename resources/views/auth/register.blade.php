@@ -23,6 +23,7 @@
                     <p class="text-muted mt-2 mb-4">{{env('APP_NAME')}}</p>
 
                 </div>
+                @include("_partials.errors-and-messages")
                 <div class="card">
                     <div class="card-body p-4">
 

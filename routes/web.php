@@ -23,8 +23,7 @@ Route::post('/loginstore', [AuthController::class, 'loginstore'])
 Route::match(array('GET', 'POST'), '/register', [AuthController::class, 'register'])
     //->middleware('guest')
     ->name('register');
-Route::get('/reset_password', [AuthController::class, 'reset_password'])
-    //->middleware('guest')
+Route::match(array('GET', 'POST'),'/reset_password', [AuthController::class, 'reset_password'])
     ->name('reset_password');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeComtroller::class, 'dashboard'])

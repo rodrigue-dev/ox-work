@@ -11,8 +11,10 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use function Ramsey\Uuid\Generator\generate;
 
 class AuthController extends Controller
 {
@@ -138,6 +140,25 @@ class AuthController extends Controller
      */
     public function reset_password(Request $request)
     {
+        if ($request->method() == "POST") {
+           $user=User::query()->where('email','=',$request->get('email'))->first();
+            if (is_null($user)){
+               return redirect()->route('reset_password',[])->withErrors(__('Utilisateur inexistant', ['name' => __('users.store')]));
+            }
+            $password=uniqid();
+
+            $data = array('name'=>$user->name,'password'=>$password);
+
+            Mail::send(['text'=>'ressetpassword'], $data, function($message) use ($user) {
+                $message->to($user->email, $user->name)->subject
+                ('Mot de passe recuperé');
+                $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
+            });
+            $user->update([
+                'password'=> bcrypt($password)
+            ]);
+            return redirect()->route('reset_password',[])->withSuccess(__('Mot de passe', ['name' => __('users.store')]));
+        }
         return view('auth.reset_password');
     }
 

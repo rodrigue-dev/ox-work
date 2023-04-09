@@ -14,6 +14,7 @@
 <!-- Begin page -->
 <div id="wrapper">
 @include('_partials._header')
+    @include("_partials.errors-and-messages")
     @yield('content')
 @include('_partials._footer')
 </div>

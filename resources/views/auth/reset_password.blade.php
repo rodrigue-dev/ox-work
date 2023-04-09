@@ -13,6 +13,7 @@
 <body class="loading authentication-bg authentication-bg-pattern">
 <div class="account-pages mt-5 mb-5">
     <div class="container">
+
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <div class="text-center">
@@ -21,6 +22,7 @@
                     </a>
                     <p class="text-muted mt-2 mb-4">{{env('APP_NAME')}}</p>
                 </div>
+                @include("_partials.errors-and-messages")
                 <div class="card">
 
                     <div class="card-body p-4">
@@ -30,11 +32,11 @@
                             <p class="text-muted mb-0 font-13">Enter your email address and we'll send you an email with instructions to reset your password.  </p>
                         </div>
 
-                        <form action="#">
-
+                        <form action="{{route('reset_password')}}" method="POST">
+                            {{csrf_field()}}
                             <div class="mb-3">
                                 <label for="emailaddress" class="form-label">Email address</label>
-                                <input class="form-control" type="email" id="emailaddress" required="" placeholder="Enter your email">
+                                <input class="form-control" name="email" type="email" id="emailaddress" required="" placeholder="Enter your email">
                             </div>
 
                             <div class="mb-3 text-center d-grid">

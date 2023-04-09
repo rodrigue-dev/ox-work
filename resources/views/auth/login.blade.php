@@ -14,15 +14,16 @@
 <div class="account-pages">
     <div class="container">
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-3">
             <div class="col-md-8 col-lg-6 col-xl-4">
                 <div class="text-center">
                     <a href="/">
-                        <img src="#" alt="" height="22" class="mx-auto">
+                       {{-- <img src="{{asset('storage/images/oxfam.png')}}" alt="" height="50" class="mx-auto">--}}
                     </a>
                     <p class="text-muted mt-2 mb-4">{{env('APP_NAME')}}</p>
 
                 </div>
+                @include("_partials.errors-and-messages")
                 <div class="card">
                     <div class="card-body p-4">
 

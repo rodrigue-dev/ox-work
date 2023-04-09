@@ -71,12 +71,12 @@ class HomeComtroller extends Controller
         $periode=$request->get('periode');
         $jour=$request->get('date_reservation');
         $now=new \DateTime('now');
-       // if ($now->format('d')<20) {
+        if ($now->format('d')<20) {
             $calandar=Calendar::query()->where('date_reservation','=',$jour)
                 ->where('periode_id','=',$periode)
                 ->where('user_id','=',$user)->first();
             if (is_null($calandar)){
-                Calendar::create([
+                $b_ool= Calendar::create([
                     'date_creation'=>date('Y-m-d'),
                     'date_reservation'=>$jour,
                     'user_id'=>$user,
@@ -84,10 +84,13 @@ class HomeComtroller extends Controller
                     'multi'=>0,
                     'confirmed'=>0,
                 ]);
+                if (!$b_ool) {
+                    return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')])->withErrors(__('Save error', ['name' => __('users.store')]));
+                }
             }
-     //   }
+        }
 
-        return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')]);
+        return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')])->with('success','Enregistrement effectue avec success');
     }
     public function deleteCalandar(Request $request){
         $user=Auth()->user()->id;
@@ -97,7 +100,6 @@ class HomeComtroller extends Controller
             ->where('periode_id','=',$periode)
             ->where('user_id','=',$user)->first();
         if (!is_null($calandar)){
-            //die();
             $calandar->delete();
         }
         return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')]);
@@ -105,10 +107,15 @@ class HomeComtroller extends Controller
     public function conge(Request $request)
     {
         if ($request->method()=="POST"){
-            Conge::create([
+           $b_ool= Conge::create([
                 "date_conge" =>$request->get('date_conge'),
                 "periode_id" =>$request->get('periode_id'),
             ]);
+            if ($b_ool) {
+                return redirect()->route('conge',[])->withSuccess(__('Save success', ['name' => __('users.store')]));
+            } else {
+                return redirect()->route('conge',[])->withErrors(__('Save error', ['name' => __('users.store')]));
+            }
         }
         if ($request->ajax()) {
             $data = Conge::select('*');
@@ -156,23 +163,24 @@ class HomeComtroller extends Controller
             $data = Connexion::select('*');
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('datecreation',function ($row){
-                    return $row->date_conge;
+               /* ->addColumn('datecreation',function ($row){
+                    return $row->datecreation;
                 })
                 ->addColumn('email',function ($row){
                     return $row->email;
                 })
                 ->addColumn('ip',function ($row){
                     return $row->ip;
-                })
+                })*/
                 ->addColumn('status', function($row){
                   if ($row->status==true){
-                      return "Reusssi";
+                      return "<span class='badge badge-soft-success'>Reusssi</span>";
                   }else{
-                      return "Echec";
+                      return "<span class='badge badge-soft-danger'>Echec</span>";
                   }
 
                 })
+                ->rawColumns(['status'])
                 ->make(true);
         }
         return view('pages.connexions',['connexions'=>$users]);
@@ -220,9 +228,10 @@ class HomeComtroller extends Controller
             'heure_fin'=>$request->heure_fin,
         ]);
         if ($b_ool) {
-            return redirect()->route('periode',[])->withSuccess(__('Delete success', ['name' => __('users.store')]));
+          //  return back()->with()
+            return redirect()->route('periode',[])->with('success', 'peroide modifié avec success');
         } else {
-            return redirect()->route('periode',[])->withErrors(__('Delete error', ['name' => __('users.store')]));
+            return redirect()->route('periode_edit',['id'=>$periode->id])->withErrors(__('update error', ''));
         }
         }
         return view('pages.edit.periode',['periode'=>$periode]);
@@ -289,18 +298,14 @@ class HomeComtroller extends Controller
         $receives=[];
         for ($i = 0; $i < sizeof($ob); ++$i) {
             $user=User::query()->find($ob[$i]['id']);
-            $data = array('name'=>"Virat Gandhi");
+            $data = array('name'=>$user->name,'content'=>[]);
 
             Mail::send(['text'=>'mail'], $data, function($message) use ($user) {
                 $message->to($user->email, $user->name)->subject
                 ('Basic subect');
-                $message->from('juliombah13@gmail.com','Rodrigue mbah');
+                $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
             });
-          //  $receives[]=$user->email;
         }
-        /*Mail::to($receives)
-            ->cc("")
-            ->send(new InformationMail());*/
 
         return response()->json(['data' => $receives, 'status' => true]);
 

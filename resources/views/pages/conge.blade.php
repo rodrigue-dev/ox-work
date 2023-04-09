@@ -5,7 +5,7 @@
 background-size: contain;
 background-attachment: fixed;background-position: center">
         <div class="content">
-
+        @include("_partials.errors-and-messages")
             <!-- Start Content-->
             <div class="container-fluid">
                 <!-- start page title -->

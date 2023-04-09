@@ -7,6 +7,7 @@
             <!-- Start Content-->
             <div class="container-fluid">
                 <!-- start page title -->
+                @include("_partials.errors-and-messages")
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box page-title-box-alt">
