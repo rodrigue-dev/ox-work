@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
                 'phone' => '+12398190255',
                 'email_verified_at' => now(),
                 'role' => 'ROLE_ADMIN',
-                //'status' => 'active',
+                'activate' => true,
         ]);
     }
 }

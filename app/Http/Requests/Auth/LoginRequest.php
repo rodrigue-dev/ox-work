@@ -51,6 +51,12 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);
+
+        }
+        if (!Auth::user()->activate){
+            throw ValidationException::withMessages([
+                'activate' => 'Nous sommes desolé! votre compte est encours d\' activation',
+            ]);
         }
 
         RateLimiter::clear($this->throttleKey());

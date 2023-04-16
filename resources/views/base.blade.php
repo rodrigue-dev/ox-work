@@ -76,6 +76,7 @@
                 {data: 'commune', name: 'commune'},
                 {data: 'email', name: 'email'},
                 {data: 'role', name: 'role'},
+                {data: 'activate', name: 'action', orderable: false, searchable: false},
             ]
         });
 

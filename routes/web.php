@@ -56,6 +56,8 @@ Route::group(['middleware' => 'isAdmin'], function () {
         ->name('periode_edit');
     Route::match(array('GET', 'POST'),'/conge_edit/{id}', [HomeComtroller::class, 'conge_edit'])
         ->name('conge_edit');
+    Route::match(array('GET', 'POST'),'/users/activate/{id}', [HomeComtroller::class, 'activate_or_desactivate'])
+        ->name('activate_or_desactivate');
     Route::get('/delete_conge', [HomeComtroller::class, 'delete_conge'])
         ->name('delete_conge');
     Route::get('/delete_periode', [HomeComtroller::class, 'delete_periode'])

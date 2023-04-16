@@ -71,6 +71,10 @@ class HomeComtroller extends Controller
         $periode=$request->get('periode');
         $jour=$request->get('date_reservation');
         $now=new \DateTime('now');
+        $jour_time=new \DateTime($jour);
+        if ($jour_time->setTime(23,59,00)->getTimestamp()<$now->setTime(01,00,00)->getTimestamp()){
+            return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')])->withErrors(__('Echec! vous ne pouvez plus vous inscrire a cette date', ['name' => __('users.store')]));
+        }
         if ($now->format('d')<20) {
             $calandar=Calendar::query()->where('date_reservation','=',$jour)
                 ->where('periode_id','=',$periode)
@@ -96,13 +100,18 @@ class HomeComtroller extends Controller
         $user=Auth()->user()->id;
         $periode=$request->get('periode');
         $jour=$request->get('date_reservation');
+        $now=new \DateTime('now');
+        $jour_time=new \DateTime($jour);
+        if ($jour_time->setTime(23,59,00)->getTimestamp()<$now->setTime(01,00,00)->getTimestamp()){
+            return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')])->withErrors(__('Echec! vous ne pouvez plus vous desinscrire a cette date', ['name' => __('users.store')]));
+        }
         $calandar=Calendar::query()->where('date_reservation','=',$jour)
             ->where('periode_id','=',$periode)
             ->where('user_id','=',$user)->first();
         if (!is_null($calandar)){
             $calandar->delete();
         }
-        return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')]);
+        return redirect()->route('dashboard',['month'=>$request->get('month'),'year'=>$request->get('year')])->with('success','Operation effectue avec success');;
     }
     public function conge(Request $request)
     {
@@ -189,17 +198,44 @@ class HomeComtroller extends Controller
     {
         $users=User::all();
         if ($request->ajax()) {
-            $data = User::select('*');
+            $data = User::query()->where('id','>',1);
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $actionBtn = '<input type="checkbox" id="'.$row->id.'">';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('activate', function($row){
+
+                    if ($row->activate){
+                        return '<a href="'.route('activate_or_desactivate',['id'=>$row->id]).'" class="btn btn-success"  id="'.$row->id.'">Desactiver</a>';
+                    }else{
+                        return '<a href="'.route('activate_or_desactivate',['id'=>$row->id]).'" class="btn btn-danger" id="'.$row->id.'">Activer</a>';
+                    }
+                })
+                ->rawColumns(['action','activate'])
                 ->make(true);
         }
         return view('pages.users',['users'=>$users]);
+    }
+
+    public function activate_or_desactivate(Request $request,$id)
+    {
+        $user=User::query()->find($id);
+        if ($user->activate){
+            $status=false;
+        }else{
+            $status=true;
+        }
+        $b_ool= $user->update([
+            'activate'=>$status,
+        ]);
+        if ($b_ool) {
+            return redirect()->route('users',[])->withSuccess(__('Operation success', ['name' => __('users.store')]));
+        } else {
+            return redirect()->route('users',[])->withErrors(__('Operation echoué', ['name' => __('users.store')]));
+        }
+
     }
     public function conge_edit(Request $request,$id)
     {
