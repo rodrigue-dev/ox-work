@@ -334,9 +334,9 @@ class HomeComtroller extends Controller
         $receives=[];
         for ($i = 0; $i < sizeof($ob); ++$i) {
             $user=User::query()->find($ob[$i]['id']);
-            $data = array('name'=>$user->name,'content'=>[]);
+            $data_ = array('name'=>$user->name,'content'=>[]);
 
-            Mail::send(['text'=>'mail'], $data, function($message) use ($user) {
+            Mail::send(['text'=>'mail'], $data_, function($message) use ($user) {
                 $message->to($user->email, $user->name)->subject
                 ('Basic subect');
                 $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));

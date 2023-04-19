@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('changepassword');
     Route::match(array('GET', 'POST'),'/changeimage', [AuthController::class, 'changeimage'])
         ->name('changeimage');
+    Route::get('/report/calendar', [HomeComtroller::class, 'reportCalendar'])
+        ->name('reportcalandar');
 });
 Route::group(['middleware' => 'isAdmin'], function () {
     Route::match(array('GET', 'POST'),'/conge', [HomeComtroller::class, 'conge'])
@@ -68,7 +70,6 @@ Route::group(['middleware' => 'isAdmin'], function () {
         ->name('users');
     Route::post('/users/sendmail', [HomeComtroller::class, 'sendmail'])
         ->name('sendmail');
-    Route::get('/report/calendar', [HomeComtroller::class, 'reportCalendar'])
-        ->name('reportcalandar');
+
 });
 

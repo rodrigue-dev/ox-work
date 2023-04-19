@@ -51,6 +51,7 @@ $('#delete_btn').click(function () {
                 window.location.reload(true);
             },
             error: function (err) {
+                console.log(err)
                 alert("An error ocurred while loading data ...");
             }
         });
