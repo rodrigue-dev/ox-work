@@ -31,7 +31,7 @@
                                 <div class="card-body">
                                     <div class="row justify-content-end">
                                         <div class="col-sm-2">
-                                            <button class="float-end btn btn-danger" id="send_mail">Envoyer les mails</button>
+                                            <button class="float-end btn btn-danger"  data-bs-toggle="modal" data-bs-target="#bs-mail-modal-sm">Envoyer les mails</button>
 
                                         </div>
                                      </div>
@@ -81,5 +81,32 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="bs-mail-modal-sm" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Envoyer le mail</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Subject</label>
+                        <input class="form-control" name="suject" type="text" id="subject" required="" placeholder="Enter your subject">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message_mail" class="form-label">Message:</label>
+                        <textarea class="form-control" name="message_mail" placeholder="Entrer le message"  id="message_mail">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="mb-3 d-grid text-center">
+                        <button class="btn btn-success" type="button" id="send_mail"> Envoyer </button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 @endsection
 

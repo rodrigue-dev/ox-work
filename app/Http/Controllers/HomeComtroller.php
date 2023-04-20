@@ -331,14 +331,15 @@ class HomeComtroller extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $ob = $data['ob'];
+        $subject=$data['subject'];
+        $message_send=$data['message'];
         $receives=[];
         for ($i = 0; $i < sizeof($ob); ++$i) {
             $user=User::query()->find($ob[$i]['id']);
-            $data_ = array('name'=>$user->name,'content'=>[]);
+            $data_ = array('name'=>$user->name,'content'=>$message_send);
 
-            Mail::send(['text'=>'mail'], $data_, function($message) use ($user) {
-                $message->to($user->email, $user->name)->subject
-                ('Basic subect');
+            Mail::send(['text'=>'mail'], $data_, function($message) use ($user,$subject,$message_send) {
+                $message->to($user->email, $user->name)->subject($subject);
                 $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
             });
         }

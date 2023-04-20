@@ -80,7 +80,7 @@ $('#delete_btn').click(function () {
             type: "POST",
             dataType: "JSON",
             data: JSON.stringify({
-                ob: jsonObj
+                ob: jsonObj,subject:$('#subject').val(),message:$('#message_mail').text()
             }),
             success: function (data) {
                 window.location.reload(true);
