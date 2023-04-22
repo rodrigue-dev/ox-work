@@ -48,11 +48,18 @@ $('#delete_btn').click(function () {
                 'item':$('#reportday_id').text()
             },
             success: function (data) {
-                window.location.reload(true);
+                console.log(data)
+                if (data.status===200){
+                    window.location.reload(true);
+                }else {
+                    alert(data.data);
+                }
+
             },
             error: function (err) {
                 console.log(err)
                 alert("An error ocurred while loading data ...");
+                //window.location.reload(true);
             }
         });
     })
@@ -80,7 +87,7 @@ $('#delete_btn').click(function () {
             type: "POST",
             dataType: "JSON",
             data: JSON.stringify({
-                ob: jsonObj,subject:$('#subject').val(),message:$('#message_mail').text()
+                ob: jsonObj,subject:$('#subject').val(),message:$('#message_mail').val()
             }),
             success: function (data) {
                 window.location.reload(true);

@@ -127,9 +127,9 @@ class AuthController extends Controller
             $status= $user->update([
                  'password' => bcrypt($request->get('password')),
              ]);
-            $data_ = array('name'=>$user->name,'content'=>['message'=>'Votre mot de passe a ete change. voici votre nouveau mot de passe:
-            ','newpassword'=>$request->get('password')]);
-            Mail::send(['text'=>'mail'], $data_, function($message) use ($user) {
+            $data_ = array('name' => $user->name, 'password' => $request->get('password'));
+
+            Mail::send(['text'=>'ressetpassword'], $data_, function($message) use ($user) {
                 $message->to($user->email, $user->name)->subject
                 ('Changement de mot de passe');
                 $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));

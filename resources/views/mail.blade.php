@@ -1,2 +1,2 @@
-<h1>Hi, {{ $name }}</h1>
-<p>{{$content}}</p>
+Hi, {{ $name }}
+{{$content}}
